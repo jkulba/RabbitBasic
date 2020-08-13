@@ -9,7 +9,7 @@ namespace Receive
     {
         static void Main(string[] args)
         {
-            var factory = new ConnectionFactory() { HostName = "192.168.86.119", UserName = "joe", Password = "Password1" };
+            var factory = new ConnectionFactory() { HostName = "127.0.0.1", UserName = "guest", Password = "guest" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel()) 
             {
