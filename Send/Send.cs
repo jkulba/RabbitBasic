@@ -9,10 +9,9 @@ namespace Send
     {
         static void Main(string[] args)
         {
-            var factory = new ConnectionFactory() { HostName = "192.168.86.246", UserName = "guest", Password = "guest" };
+            var factory = new ConnectionFactory() { HostName = "127.0.0.1", UserName = "guest", Password = "guest" };
             string message = "";
-            // string jsonFilePath = @"C:\Users\jkulba\Projects\RabbitBasic\samples\ElectrodeTestRequest.json";
-            string jsonFilePath = @"/home/jim/Projects/RabbitBasic/samples/ElectrodeTestRequest.json";
+            string jsonFilePath = @"/Users/rr829468/Projects/RabbitBasic/samples/ElectrodeTestRequest.json";
             using (StreamReader r = new StreamReader(jsonFilePath))
             {
                 message = r.ReadToEnd();
@@ -21,12 +20,12 @@ namespace Send
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "CoreToProcessorImpedanceData", durable: true, exclusive: false, autoDelete: false, arguments: null);
+                channel.QueueDeclare(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
                 for (int i = 1; i <= 10000; i++)
                 {
                     var body = Encoding.UTF8.GetBytes(message);
-                    channel.BasicPublish(exchange: "HUv1Backend", routingKey: "CoreToProcessorImpedanceData", basicProperties: null, body: body);
+                    channel.BasicPublish(exchange: "", routingKey: "hello", basicProperties: null, body: body);
                     Console.WriteLine(i);
                 }
             }
@@ -35,10 +34,3 @@ namespace Send
         }
     }
 }
-
-
-
-
-//connectionFactory.UserName = "accountant";
-//connectionFactory.Password = "accountant";
-//connectionFactory.VirtualHost = "accounting";
